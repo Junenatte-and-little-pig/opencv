@@ -1,0 +1,19 @@
+﻿  main.cpp
+D:\opencv\build\include\opencv2\core\traits.hpp(386,31): error C2039: "type": 不是 "cv::DataType<T>" 的成员
+          with
+          [
+              T=cv::String
+          ]
+D:\opencv\build\include\opencv2\core\traits.hpp(386): message : 参见“cv::DataType<T>”的声明
+          with
+          [
+              T=cv::String
+          ]
+D:\opencv\build\include\opencv2\core\mat.inl.hpp(197): message : 查看对正在编译的 类 模板 实例化“cv::traits::Type<_Tp>”的引用
+          with
+          [
+              _Tp=cv::String
+          ]
+D:\opencv\build\include\opencv2\core\mat.inl.hpp(1301): message : 查看对正在编译的函数 模板 实例化“cv::debug_build_guard::_OutputArray::_OutputArray<cv::String>(std::vector<cv::String,std::allocator<cv::String>> &)”的引用
+E:\Github\opencv-ml-demo\opencv-ml-demo\main.cpp(81): message : 查看对正在编译的函数 模板 实例化“cv::Mat::operator std::vector<cv::String,std::allocator<cv::String>>(void) const<cv::String>”的引用
+D:\opencv\build\include\opencv2\core\traits.hpp(386,1): error C2065: “type”: 未声明的标识符
