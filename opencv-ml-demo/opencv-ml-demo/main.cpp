@@ -68,20 +68,40 @@ int main()
 		//备份数据
 		//分割标签
 		//划分测试集和训练集
-		data->setTrainTestSplitRatio(0.7);
+		data->setTrainTestSplitRatio(0.6);
 		Mat x_train = data->getTrainSamples();
-		Mat x_train_idx = data->getTrainSampleIdx();
+		//Mat x_train_idx = data->getTrainSampleIdx();
 		Mat x_test = data->getTestSamples();
-		Mat x_test_idx = data->getTestSampleIdx();
+		//Mat x_test_idx = data->getTestSampleIdx();
+		//TODO这个方法读到的标签不完整，需要重新从文件中读取标签
 		Mat y_train = data->getTrainResponses();
 		Mat y_test = data->getTestResponses();
-		cout << x_train << endl;
-		cout << x_train_idx << endl;
-		cout << x_test << endl;
-		cout << x_test_idx << endl;
-		//TODO这个方法读到的标签不完整，需要重新从文件中读取标签
-		cout << y_train << endl;
-		cout << y_test << endl;
+		//cout << x_train << endl;
+		//cout << x_train_idx << endl;
+		//cout << x_test << endl;
+		//cout << x_test_idx << endl;
+		//cout << y_train << endl;
+		//cout << y_test << endl;
+		vector<int> train_label;
+		for (int i = 0; i < y_train.rows; i++) {
+			for (int j = 0; j < y_train.cols; j++) {
+				float fLabel = y_train.at<float>(i, j);
+				train_label.push_back((int) fLabel);
+			}
+		}
+		Mat train_label_mat = Mat(train_label);
+		train_label_mat.reshape(1, 3);
+		//SVM训练
+		Ptr<SVM> svm = SVM::create();
+		svm->setType(SVM::C_SVC); //设置分类器类型
+		svm->setKernel(SVM::LINEAR); //设置核函数
+		Ptr<TrainData> x_train_data = TrainData::create(x_train, ROW_SAMPLE, train_label_mat);
+		svm->train(x_train_data);
+		//TODO类型匹配
+		for (int i = 0; i < x_test.rows; i++) {
+			float response = svm->predict(x_test.at<int>(i));
+			cout << response << endl;
+		}
 	}
 	return 0;
 }
